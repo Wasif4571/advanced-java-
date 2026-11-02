@@ -1,0 +1,28 @@
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
+public class ProxyDemo {
+    public interface Service { 
+        String execute(String param); 
+    }
+    
+    @SuppressWarnings("unchecked")
+    public static <T> T createProxy(T target, Class<T> interfaceType) {
+        return (T) Proxy.newProxyInstance(
+            interfaceType.getClassLoader(),
+            new Class<?>[]{interfaceType},
+            (proxy, method, args) -> {
+                long start = System.nanoTime();
+                try {
+                    Object result = method.invoke(target, args);
+                    long duration = System.nanoTime() - start;
+                    System.out.println("[Metrics] Method " + method.getName() + " took " + duration + "ns");
+                    return result;
+                } catch (Throwable e) {
+                    throw e.getCause() != null ? e.getCause() : e;
+                }
+            }
+        );
+    }
+}
