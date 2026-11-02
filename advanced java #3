@@ -1,0 +1,27 @@
+abstract class AbstractBuilder<T extends AbstractBuilder<T>> {
+    protected String name;
+
+    @SuppressWarnings("unchecked")
+    public T name(String name) {
+        this.name = name;
+        return (T) this; // Unchecked cast to the subclass type
+    }
+
+    abstract Object build();
+}
+
+class UserBuilder extends AbstractBuilder<UserBuilder> {
+    private int age;
+
+    public UserBuilder age(int age) { 
+        this.age = age; 
+        return this; 
+    }
+
+    @Override 
+    User build() { 
+        return new User(name, age); 
+    }
+}
+
+record User(String name, int age) {}
