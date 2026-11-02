@@ -1,0 +1,23 @@
+import java.util.concurrent.CompletableFuture;
+
+public class AsyncPipeline {
+    public static CompletableFuture<String> processUserData(String userId) {
+        return CompletableFuture.supplyAsync(() -> fetchUser(userId))
+            .thenComposeAsync(user -> CompletableFuture.supplyAsync(() -> enrichData(user)))
+            .handle((result, ex) -> {
+                if (ex != null) {
+                    return "Fallback: " + ex.getCause().getMessage();
+                }
+                return "Success: " + result;
+            });
+    }
+
+    private static String fetchUser(String id) { 
+        if ("error".equals(id)) throw new RuntimeException("Database timeout");
+        return "User#" + id; 
+    }
+    
+    private static String enrichData(String user) { 
+        return user + " [Enriched]"; 
+    }
+}
