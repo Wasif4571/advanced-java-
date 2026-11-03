@@ -23,5 +23,8 @@ target prints the excuetion method name
 
 
 advanced java #3
-
+it uses a resubale builder pattern T extends AbstractBuilder<T>
+the repeating design make sure the methods return to the subclass like age instead of parent class 
+it chains the methods together im guessing 
+then uses build() to finalize the object.
 
