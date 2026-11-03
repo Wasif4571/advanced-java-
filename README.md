@@ -8,12 +8,18 @@ the overall code like works in the backround white letting you do other things t
 
 
 
-advanced java #2
-
-
-
-
-
-
-
 advanced java #3
+Proxy.newProxyInstance generates a new instance that works with the interface.
+the handler reads and recives every method of invocation on the proxy object.
+the proxy is the instance itself 
+the method representes what the function is called
+method.invoke(target, args) find the excution duration 
+target prints the excuetion method name 
+
+
+
+
+
+
+
+advanced java #2
